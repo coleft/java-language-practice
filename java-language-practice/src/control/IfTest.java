@@ -5,19 +5,34 @@ import java.util.Scanner;
 public class IfTest {	
 	Scanner in = new Scanner(System.in);	
 	StringBuilder sb = new StringBuilder();
-	StringBuilder sb2 = new StringBuilder();
+	StringBuilder sb2 = new StringBuilder();	
 	
-	// 1. 점수
-	int score = in.nextInt();
+	int score ;
 	
-	// 2. 구매
-	int price = in.nextInt();
-	int ea = in.nextInt();
-	int amount = price*ea;
+	
+	int price;
+	int ea;
+	
+	double amount = price*ea;
 	double tax = amount*0.1;
 	double totAmount = amount+tax;
+			
 	
-	public IfTest() {		//입력받은 score를 매개로 결과물이 갈린다.
+	
+	public IfTest() {		//입력받은 score를 매개로 결과물이 갈린다. 생성자
+		// 1. 점수
+		System.out.println("점수를입력하시오.");
+		score = in.nextInt();
+		
+		// 2. 구매
+		System.out.println("가격을입력하시오.");
+		price = in.nextInt();
+		System.out.println("수량을입력하시오.");
+		ea = in.nextInt();
+		
+		amount = price*ea;
+		tax = amount*0.1;
+		totAmount = amount+tax;
 		
 		if(score >= 80) sb.append("합격");
 		else if(score>=40) sb.append("대기");
@@ -28,7 +43,6 @@ public class IfTest {
 		else if(totAmount>=300) sb2.append("자전거");
 		else sb2.append("화장지");		
 	}	
-	
 	
 	public void test1() {	//생성자의 결과물을 출력하는 "역량을 지닌" 메소드
 		
