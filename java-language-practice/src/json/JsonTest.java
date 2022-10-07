@@ -38,7 +38,7 @@ public class JsonTest {
 		System.out.println(jArray.toJSONString());
 		for(int i=0; i<jArray.size(); i++) {
 			System.out.printf("%d : %s\n", i, jArray.get(i));
-			
+		}
 			
 			
 		//--------------------------------------			
@@ -89,27 +89,21 @@ public class JsonTest {
 		System.out.println("-".repeat(20));
 		System.out.println("6. json map 2 : [{k:[]},{k:[]}]");
 		
-		jsonString = "[{'names':['a','b','c']},{'ages':[7,6,5,4,3,2]}]";
-		jsonString = jsonString.replace("'","\"");
-		System.out.println("<br/>json string :" + jsonString);
-		
+		jsonString = "[{'names':['a','b','c']},{'ages':[5,6,7]}]";
+		jsonString = jsonString.replace("'","\"");		
 		jArray = (JSONArray)jParser.parse(jsonString);
-		
-		for(i = 0; i<jArray.size(); i++) {
-			jObject = (JSONObject) jArray.get(i);
-			@SuppressWarnings("unchecked")
-			Iterator<String> iter = jObject.keySet().iterator();
+				
+		for(int i=0;i<jArray.size();i++) {
+			jObject = (JSONObject)jArray.get(i);
+			Iterator<String> iter = jObject.keySet().iterator();//jObject keySet 나열해줘!! iterator : 배열을 순환시켜준다.
+			//아래 while의 hasNext는 iter가 더 많은 요소 갖으면 true 반환
 			while(iter.hasNext()) {
-				String key = (String) iter.next();
-				System.out.println("key : "+key);
+				String key = (String)iter.next();
 				JSONArray values = (JSONArray)jObject.get(key);
-				for(int j=0; j<values.size(); j++) {
-					System.out.println("values: " + values.get(j));
-				}
+				System.out.println(values.toJSONString());
 			}
-		}
-		
-		}
+		}		
+		//for(Object ob : jArray){}				
 	}
 	
 	public static void main(String[] args) {
