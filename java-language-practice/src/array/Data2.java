@@ -47,5 +47,5 @@ public class Data2 implements Comparable<Data2>{
 		String str = "mid:" + this.mid
 					+", score:" + this.score;
 		return str;
-	}		
+	}
 }
