@@ -1,4 +1,4 @@
-package gui;
+package format;
 
 import java.awt.EventQueue;
 
