@@ -30,6 +30,7 @@ public class MyInterMain extends JFrame {
    private JMenu mnNewMenu_3;
    private JMenuItem mntmNewMenuItem_2;
    private JMenuItem mntmNewMenuItem_3;
+   private JMenuItem mntmNewMenuItem_4;
 
    /**
     * Launch the application.
@@ -130,6 +131,7 @@ public class MyInterMain extends JFrame {
 			mnNewMenu_3 = new JMenu("Util");
 			mnNewMenu_3.add(getMntmNewMenuItem_2());
 			mnNewMenu_3.add(getMntmNewMenuItem_3());
+			mnNewMenu_3.add(getMntmNewMenuItem_4());
 		}
 		return mnNewMenu_3;
 	}
@@ -162,5 +164,19 @@ public class MyInterMain extends JFrame {
 			});
 		}
 		return mntmNewMenuItem_3;
+	}
+	public JMenuItem getMntmNewMenuItem_4() {
+		if (mntmNewMenuItem_4 == null) {
+			mntmNewMenuItem_4 = new JMenuItem("SetFrame");
+			mntmNewMenuItem_4.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JInternalFrame sf = new SetFrame();
+					desktopPane.add(sf);
+					desktopPane.updateUI();
+					sf.toFront();
+				}
+			});
+		}
+		return mntmNewMenuItem_4;
 	}
 }
