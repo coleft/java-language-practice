@@ -14,8 +14,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import format.Memberinput;
+import format.MyInterMain;
 import iostream.Data;
 import iostream.MemberDao;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MemberSearch extends JInternalFrame {
    private JPanel panel;
@@ -23,6 +29,7 @@ public class MemberSearch extends JInternalFrame {
    private JButton btnNewButton;
    private JScrollPane scrollPane;
    private JTable table;
+   MyInterMain main;
 
    /**
     * Launch the application.
@@ -43,9 +50,23 @@ public class MemberSearch extends JInternalFrame {
    /**
     * Create the frame.
     */
+   
+   public MemberSearch(MyInterMain main) {
+	   this();
+	   this.main = main;
+   }
    public MemberSearch() {
 	  super("회원조회", true,true,true,true);
+	  addInternalFrameListener(new InternalFrameAdapter() {
+	  	@Override
+	  	public void internalFrameClosing(InternalFrameEvent e) {
+	  		main.ms = null;
+	  	}
+	  });
       //setTitle("회원조회");
+	  
+	  
+	  
 	  setVisible(true);
       setBounds(100, 100, 550, 470);
       getContentPane().setLayout(new BorderLayout(0, 0));
@@ -104,6 +125,34 @@ public class MemberSearch extends JInternalFrame {
          model.setDataVector(vector, header);
          
          table = new JTable(model);
+         table.addMouseListener(new MouseAdapter() {
+         	@Override
+         	public void mouseClicked(MouseEvent e) {
+         		// jtable에서 클릭된 좌표(row, column)
+         		int row = table.getSelectedRow();
+         		int col = table.getSelectedColumn();
+         		Object obj = table.getValueAt(row, col);         		
+         		System.out.printf("(%d,%d) = %s\n", row, col, obj);
+         		if(main.mi==null) {
+         			main.mi = new Memberinput();
+         			main.getDesktopPane().add(main.mi);
+         			main.getDesktopPane().updateUI();
+         			main.mi.toFront();
+         		}
+         		Memberinput mi = (Memberinput)main.mi;
+         		String id = (String)table.getValueAt(row, 0);
+         		String irum = (String)table.getValueAt(row, 1);
+         		String addr = (String)table.getValueAt(row, 2);
+         		String phone = (String)table.getValueAt(row, 3);
+         		String point = (String)table.getValueAt(row,  4);
+         		
+         		mi.getTfId().setText(id);
+         		mi.getTfIrum().setText(irum);
+         		mi.getTfAddr().setText(addr);
+         		mi.getTfPhone().setText(phone);
+         		mi.getTfPoint().setText(point);
+         	}
+         });
       }
       return table;
    }

@@ -12,8 +12,11 @@ import iostream.MemberDao;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 public class Memberinput extends JInternalFrame {
+	MyInterMain main;
 	private JLabel lblNewLabel;
 	private JTextField tfId;
 	private JLabel lblNewLabel_1;
@@ -44,11 +47,24 @@ public class Memberinput extends JInternalFrame {
       });
    }
 
+   public Memberinput(MyInterMain main) {
+	   this();
+	   this.main = main;	//닫히면 스스로를 null로 만들기위한 사전작업
+   }
+   
    /**
     * Create the frame.
     */
+   
    public Memberinput() {
       super("회원가입", true, true, true, true);
+      addInternalFrameListener(new InternalFrameAdapter() {
+      	@Override
+      	public void internalFrameClosing(InternalFrameEvent e) {
+      		main.mi = null;
+      	}
+      });
+      
       setVisible(true);
       
       setBounds(100, 100, 315, 216);      

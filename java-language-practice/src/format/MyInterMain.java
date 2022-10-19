@@ -21,7 +21,7 @@ import java.awt.event.ActionEvent;
 public class MyInterMain extends JFrame {
 
 	// JInternalFrame을 하나씩만 생성하게 처리
-	JInternalFrame mi, ms;
+	public JInternalFrame mi, ms;
 	
    private JPanel contentPane;
    private JDesktopPane desktopPane;
@@ -66,10 +66,6 @@ public class MyInterMain extends JFrame {
       setContentPane(contentPane);
       contentPane.setLayout(new BorderLayout(0, 0));
       contentPane.add(getDesktopPane(), BorderLayout.CENTER);
-      
-      Memberinput memberinput = new Memberinput();
-      memberinput.setLocation(228, 74);
-      desktopPane.add(memberinput);
       desktopPane.updateUI();   //중요
    }
 
@@ -116,13 +112,13 @@ public class MyInterMain extends JFrame {
          mntmNewMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 				if(mi == null) {	//mi가 null일 때만 만들고 return해 모든 코드가 이런식으로 되어있다.
-					mi = new Memberinput();
+					mi = new Memberinput(MyInterMain.this);
 					desktopPane.add(mi);
 					desktopPane.updateUI();
 					mi.toFront();
 				}
 			}
-         });    
+         });
       }
       return mntmNewMenuItem;
    }
@@ -132,7 +128,7 @@ public class MyInterMain extends JFrame {
          mntmNewMenuItem_1.addActionListener(new ActionListener() {
          	public void actionPerformed(ActionEvent e) {
          		if(ms == null) {
-         			ms = new MemberSearch();
+         			ms = new MemberSearch(MyInterMain.this);
              		desktopPane.add(ms);
              		desktopPane.updateUI();
              		ms.toFront();
