@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import collection.ListFrame;
+import gui.MemberSearch;
 
 import java.awt.BorderLayout;
 import javax.swing.JDesktopPane;
@@ -19,6 +20,9 @@ import java.awt.event.ActionEvent;
 
 public class MyInterMain extends JFrame {
 
+	// JInternalFrame을 하나씩만 생성하게 처리
+	JInternalFrame mi, ms;
+	
    private JPanel contentPane;
    private JDesktopPane desktopPane;
    private JMenuBar menuBar;
@@ -111,11 +115,13 @@ public class MyInterMain extends JFrame {
          
          mntmNewMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               JInternalFrame mi = new Memberinput();
-               desktopPane.add(mi);
-               desktopPane.updateUI();
-               mi.toFront();
-            }
+				if(mi == null) {	//mi가 null일 때만 만들고 return해 모든 코드가 이런식으로 되어있다.
+					mi = new Memberinput();
+					desktopPane.add(mi);
+					desktopPane.updateUI();
+					mi.toFront();
+				}
+			}
          });    
       }
       return mntmNewMenuItem;
@@ -123,6 +129,16 @@ public class MyInterMain extends JFrame {
    public JMenuItem getMntmNewMenuItem_1() {
       if (mntmNewMenuItem_1 == null) {
          mntmNewMenuItem_1 = new JMenuItem("회원조회");
+         mntmNewMenuItem_1.addActionListener(new ActionListener() {
+         	public void actionPerformed(ActionEvent e) {
+         		if(ms == null) {
+         			ms = new MemberSearch();
+             		desktopPane.add(ms);
+             		desktopPane.updateUI();
+             		ms.toFront();
+         		}         		
+         	}
+         });
       }
       return mntmNewMenuItem_1;
    }
