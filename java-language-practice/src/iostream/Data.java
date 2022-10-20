@@ -17,6 +17,7 @@ public class Data implements Serializable{
 		this.point = point;
 	}
 
+	// JTable의 데이터 속성이 Vector<Vector>이기 떄문에
 	public Vector getVector() {
 		Vector v = new Vector();
 		v.add(id);

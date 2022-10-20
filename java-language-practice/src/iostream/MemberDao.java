@@ -54,7 +54,28 @@ public class MemberDao {
 	public void modify() {
 		
 	}
-	public void delete() {
+	public void delete(String id) {
+		
+		//삭제하기위해 항목 찾는 법 많다. id값과 id를 비교하는법
+		/**
+		 *  1. 첫번째 방법
+		 *  for(int i = 0; i<list.size(); i++){
+		 *  	Data d = list.get(i);
+		 *  	if(d.getId().equals(id)){
+		 *  		list.remove(i);
+		 *  	}
+		 *  }
+		 *  
+		 * */
+		
+		/**
+		 * 	2. 두번째 방법 : Data hashCode(), equals() 재정의한 후
+		 * 		int index = list.indexOf(d);
+		 * 		list.remove(index);
+		 * 
+		 * */
+		
+		
 		
 	}
 	public void view() {

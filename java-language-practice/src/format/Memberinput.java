@@ -192,6 +192,14 @@ public class Memberinput extends JInternalFrame {
 	public JButton getBtnDelete() {
 		if (btnDelete == null) {
 			btnDelete = new JButton("삭제");
+			btnDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					MemberDao dao = new MemberDao();
+					String id = ((Memberinput)main.mi).getTfId().getText();
+					dao.delete(id);
+					
+				}
+			});
 			btnDelete.setBounds(203, 147, 85, 23);
 		}
 		return btnDelete;

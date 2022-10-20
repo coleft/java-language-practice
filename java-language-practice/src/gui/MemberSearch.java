@@ -145,12 +145,14 @@ public class MemberSearch extends JInternalFrame {
          		String addr = (String)table.getValueAt(row, 2);
          		String phone = (String)table.getValueAt(row, 3);
          		String point = (String)table.getValueAt(row,  4);
+         		//Integer point = (Integer)table.getValueAt(row, 4);
          		
          		mi.getTfId().setText(id);
          		mi.getTfIrum().setText(irum);
          		mi.getTfAddr().setText(addr);
          		mi.getTfPhone().setText(phone);
          		mi.getTfPoint().setText(point);
+         		//mi.getTfPoint().setText(point.toString());
          	}
          });
       }
