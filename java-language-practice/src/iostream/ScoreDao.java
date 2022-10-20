@@ -1,6 +1,9 @@
 package iostream;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Vector;
@@ -32,7 +35,22 @@ public class ScoreDao implements ScoreInterface{
 
 	@Override
 	public List<ScoreVo> read() {
-		return null;
+		try {
+			//score.obj 파일의 유무 체크
+			File f = new File(fileName);
+			if(f.exists()) {			
+				FileInputStream fis = new FileInputStream(fileName);
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				list = (List<ScoreVo>)ois.readObject();
+			
+				ois.close();
+				fis.close();
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}		
+		
+		return list;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package iostream;
 
 import java.io.Serializable;
+import java.util.Vector;
 
 public class ScoreVo implements Serializable{
 	public static long serialVersionUID = 300L;
@@ -16,6 +17,17 @@ public class ScoreVo implements Serializable{
 		this.score = score;
 	}
 
+	
+	public Vector getVector() {
+		Vector v = new Vector();
+		v.add(serial);
+		v.add(id);
+		v.add(mDate);
+		v.add(subject);
+		v.add(score);
+		return v;		
+	}
+	
 	@Override
 	public int hashCode() {
 		return this.serial;

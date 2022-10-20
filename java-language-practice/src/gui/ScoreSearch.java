@@ -10,18 +10,21 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import format.MyInterMain;
+import iostream.ScoreDao;
+import iostream.ScoreVo;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 public class ScoreSearch extends JInternalFrame {
 	private JPanel panel;
-	private JTextField textField;
+	private JTextField findStr;
 	private JButton btnNewButton;
 	private JScrollPane scrollPane;
 	private JTable table;
@@ -75,24 +78,36 @@ public class ScoreSearch extends JInternalFrame {
 			panel = new JPanel();
 			panel.setPreferredSize(new Dimension(10, 40));
 			panel.setLayout(new BorderLayout(0, 0));
-			panel.add(getTextField(), BorderLayout.CENTER);
+			panel.add(getFindStr(), BorderLayout.CENTER);
 			panel.add(getBtnNewButton(), BorderLayout.EAST);
 		}
 		return panel;
 	}
-	public JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setColumns(10);
+	public JTextField getFindStr() {
+		if (findStr == null) {
+			findStr = new JTextField();
+			findStr.setColumns(10);
 		}
-		return textField;
+		return findStr;
 	}
 	public JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton("검색");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					String find = findStr.getText().trim();//고급진 프로그램을 만들면 띄어쓰기 감안한다.
+					ScoreDao dao = new ScoreDao();
+					List<ScoreVo> list = dao.read();
+					DefaultTableModel model = 
+							(DefaultTableModel)table.getModel();
+					model.setRowCount(0);//기존에 테이블이 갖고 있던 데이터 모두 사라진다.
+					for(ScoreVo vo : list) {
+						if(vo.getId().contains(find)||
+						   vo.getSubject().contains(find)) {
+							model.addRow(vo.getVector());
+						}
+					}
+					table.updateUI();
 				}
 			});
 		}

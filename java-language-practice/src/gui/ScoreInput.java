@@ -173,7 +173,7 @@ public class ScoreInput extends JInternalFrame {
 					
 					ScoreVo vo = new ScoreVo(serial,id, mDate, subject, score);
 					ScoreDao dao = new ScoreDao();
-					
+					dao.write(vo);//여기까지 UI단까지는 할 일이 다 끝난 것이다.
 				}
 			});
 			btnSave.setBounds(12, 147, 97, 32);
