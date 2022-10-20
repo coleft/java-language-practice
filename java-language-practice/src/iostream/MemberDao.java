@@ -1,6 +1,7 @@
 package iostream;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -20,7 +21,7 @@ public class MemberDao {
 	public String fileName = "member.obj";
 	List<Data> list = new Vector<Data>();	//이부분에 대해서 잘 생각해봐야 한다.
 	ObjectOutputStream oos;
-	ObjectInputStream ois;
+	ObjectInputStream ois;	
 	
 	public MemberDao() {
 		list = read();
@@ -51,7 +52,29 @@ public class MemberDao {
 		}
 		return list;
 	}
-	public void modify() {
+	public void modify(Data d) {
+		
+		// 기존 자료를 다시 read
+		list = read();
+		// 수정할 데이터 검색
+		int index = list.indexOf(d);
+		if(index != -1) {
+			list.set(index, d);	//자료 갱신
+			FileOutputStream fos;
+			try {
+				fos = new FileOutputStream(fileName);
+				oos = new ObjectOutputStream(fos);
+				oos.writeObject(list);
+				oos.flush();
+				oos.close();
+				fos.close();
+				
+			} catch (Exception ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			}
+			
+		}
 		
 	}
 	public void delete(String id) {
@@ -75,7 +98,24 @@ public class MemberDao {
 		 * 
 		 * */
 		
+		read();	//최종 결과물로 다시 list를 갱신
+		Data d = new Data(id);
+		d.setId(id);
 		
+		int index = list.indexOf(d);
+		if(index != -1) {
+			list.remove(index);	//메모리에서만 삭제
+			try {	//파일에서도 삭제
+				FileOutputStream fos = new FileOutputStream(fileName);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				oos.writeObject(list);
+				oos.close();
+				fos.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	public void view() {

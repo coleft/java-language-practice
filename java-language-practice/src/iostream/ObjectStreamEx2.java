@@ -12,19 +12,19 @@ import java.util.List;
 
 public class ObjectStreamEx2 {
 	
-	List<Data2> list = new ArrayList<Data2>();
+	List<Score> list = new ArrayList<Score>();
 	String fileName = "score.obj";
 	
 	public void write() throws Exception {
 		FileOutputStream fos = new FileOutputStream(fileName);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		
-		Data2 d1 = new Data2("s001",90,100,96);
-		Data2 d2 = new Data2("a003",70,68,77);
-		Data2 d3 = new Data2("s007",100,99,97);
-		Data2 d4 = new Data2("s002",98,100,87);
-		Data2 d5 = new Data2("c017",45,67,79);
-		Data2 d6 = new Data2("b121",89,75,90);
+		Score d1 = new Score("s001",90,100,96);
+		Score d2 = new Score("a003",70,68,77);
+		Score d3 = new Score("s007",100,99,97);
+		Score d4 = new Score("s002",98,100,87);
+		Score d5 = new Score("c017",45,67,79);
+		Score d6 = new Score("b121",89,75,90);
 		
 		list.addAll(Arrays.asList(d1,d2,d3,d4,d5,d6));
 		
@@ -36,7 +36,7 @@ public class ObjectStreamEx2 {
 	public void read() throws Exception {
 		FileInputStream fis = new FileInputStream(fileName);
 		ObjectInputStream ois = new ObjectInputStream(fis);		
-		List<Data2> readData = (List<Data2>) ois.readObject();
+		List<Score> readData = (List<Score>) ois.readObject();
 		
 		list.forEach(x->System.out.println(x));
 		

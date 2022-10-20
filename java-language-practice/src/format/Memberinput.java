@@ -34,6 +34,7 @@ public class Memberinput extends JInternalFrame {
    /**
     * Launch the application.
     */
+	
    public static void main(String[] args) {
       EventQueue.invokeLater(new Runnable() {
          public void run() {
@@ -185,6 +186,20 @@ public class Memberinput extends JInternalFrame {
 	public JButton getBtnModify() {
 		if (btnModify == null) {
 			btnModify = new JButton("수정");
+			btnModify.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					MemberDao dao = new MemberDao();	//control class입니다.
+					
+					String id = tfId.getText();
+					String irum = tfIrum.getText();
+					String addr = tfAddr.getText();
+					String phone = tfPhone.getText();
+					int point = Integer.parseInt(tfPoint.getText());
+					
+					Data d = new Data(id, irum, addr, phone, point);
+					dao.modify(d);
+				}
+			});
 			btnModify.setBounds(109, 147, 85, 23);
 		}
 		return btnModify;

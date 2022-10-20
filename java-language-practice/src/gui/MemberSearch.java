@@ -22,18 +22,22 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MemberSearch extends JInternalFrame {
    private JPanel panel;
-   private JTextField textField;
+   private JTextField findStr;
    private JButton btnNewButton;
    private JScrollPane scrollPane;
    private JTable table;
    MyInterMain main;
-
+   MemberDao dao;
+   
    /**
     * Launch the application.
     */
+   
    public static void main(String[] args) {
       EventQueue.invokeLater(new Runnable() {
          public void run() {
@@ -72,6 +76,8 @@ public class MemberSearch extends JInternalFrame {
       getContentPane().setLayout(new BorderLayout(0, 0));
       getContentPane().add(getPanel(), BorderLayout.NORTH);
       getContentPane().add(getScrollPane(), BorderLayout.CENTER);
+      dao = new MemberDao();
+      
    }
 
    public JPanel getPanel() {
@@ -79,21 +85,44 @@ public class MemberSearch extends JInternalFrame {
          panel = new JPanel();
          panel.setPreferredSize(new Dimension(10, 35));
          panel.setLayout(new BorderLayout(0, 0));
-         panel.add(getTextField(), BorderLayout.CENTER);
+         panel.add(getFindStr(), BorderLayout.CENTER);
          panel.add(getBtnNewButton(), BorderLayout.EAST);
       }
       return panel;
    }
-   public JTextField getTextField() {
-      if (textField == null) {
-         textField = new JTextField();
-         textField.setColumns(10);
+   public JTextField getFindStr() {
+      if (findStr == null) {
+         findStr = new JTextField();
+         findStr.setColumns(10);
       }
-      return textField;
+      return findStr;
    }
    public JButton getBtnNewButton() {
       if (btnNewButton == null) {
          btnNewButton = new JButton("검색");
+         btnNewButton.addActionListener(new ActionListener() {
+         	public void actionPerformed(ActionEvent e) {
+         		//MemberDao dao = new MemberDao();
+         		String find = findStr.getText();
+         		List<Data> list = dao.read();
+         		Vector vector = new Vector();
+         		DefaultTableModel model =
+         				(DefaultTableModel)table.getModel();
+         		model.setRowCount(0);	//기존 데이터 모두 삭제
+         		
+         		for(Data d : list) {
+         			if(d.getId().contains(find)||
+         			   d.getmName().contains(find)||
+         			   d.getAddr().contains(find)||
+         			   d.getPhone().contains(find)) {
+         				model.addRow(d.getVector());         				
+         			}
+         		}    
+         		
+         		table.updateUI();
+         		
+         	}
+         });
       }
       return btnNewButton;
    }
@@ -144,15 +173,15 @@ public class MemberSearch extends JInternalFrame {
          		String irum = (String)table.getValueAt(row, 1);
          		String addr = (String)table.getValueAt(row, 2);
          		String phone = (String)table.getValueAt(row, 3);
-         		String point = (String)table.getValueAt(row,  4);
-         		//Integer point = (Integer)table.getValueAt(row, 4);
+         		//String point = (String)table.getValueAt(row,  4);
+         		Integer point = (Integer)table.getValueAt(row, 4);
          		
          		mi.getTfId().setText(id);
          		mi.getTfIrum().setText(irum);
          		mi.getTfAddr().setText(addr);
          		mi.getTfPhone().setText(phone);
-         		mi.getTfPoint().setText(point);
-         		//mi.getTfPoint().setText(point.toString());
+         		//mi.getTfPoint().setText(point);
+         		mi.getTfPoint().setText(point.toString());
          	}
          });
       }

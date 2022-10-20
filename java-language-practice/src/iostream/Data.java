@@ -9,6 +9,9 @@ public class Data implements Serializable{
 	String id, mName, addr, phone;
 	int point;
 	
+	public Data(String id) {
+		
+	}
 	public Data(String id, String mName, String addr, String phone, int point) {
 		this.id = id;
 		this.mName = mName;
@@ -17,14 +20,14 @@ public class Data implements Serializable{
 		this.point = point;
 	}
 
-	// JTable의 데이터 속성이 Vector<Vector>이기 떄문에
+	// JTable의 데이터 속성이 Vector<Vector>이기 떄문에 ->Jtable에서는 Vector를 사용해~
 	public Vector getVector() {
 		Vector v = new Vector();
 		v.add(id);
 		v.add(mName);
 		v.add(addr);
 		v.add(phone);
-		v.add(phone);
+		v.add(point);
 		return v;		
 	}
 	
@@ -37,6 +40,23 @@ public class Data implements Serializable{
 					 +"\nphone : " +this.phone
 					 +"\npoint : " +this.point;
 		return temp;
+	}	
+
+	@Override
+	public int hashCode() {
+		// 패키지명.클래스명@자신의 hashCode
+		/* hashCode가 다르면 다른 객체, hashCode가 같으면 equals로 비교해서 다르면 다른 객체, 같으면 동등객체 */
+		return this.id.hashCode();	//재정의
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean b = false;
+		if(obj instanceof Data) {
+			Data d = (Data) obj;
+			b = d.getId().equals(this.id);
+		}
+		return b;
 	}
 
 	public String getId() {

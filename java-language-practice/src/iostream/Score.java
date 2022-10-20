@@ -3,7 +3,7 @@ package iostream;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class Data2 implements Serializable{
+public class Score implements Serializable{
 	public static long serialVersionUID = 100L;
 	
 	String id;
@@ -11,7 +11,7 @@ public class Data2 implements Serializable{
 	double tot;
 	double avg;
 	
-	public Data2(String id, int kor, int eng, int mat) {
+	public Score(String id, int kor, int eng, int mat) {
 		this.id = id;
 		this.kor = kor;
 		this.eng = eng;
