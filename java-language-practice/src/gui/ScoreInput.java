@@ -185,6 +185,20 @@ public class ScoreInput extends JInternalFrame {
 			btnModify = new JButton("수정");
 			btnModify.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
+					//수정된 정보를 가져와 ScoreVo 객체 생성
+					int serial = Integer.parseInt(getTfSerial().getText());
+					String id = getTfId().getText();
+					String mDate = getTfMdate().getText();
+					String subject = getTfSubject().getText();
+					int score = Integer.parseInt(getTfScore().getText());
+					ScoreVo vo = new ScoreVo(serial, id, mDate, subject, score);
+					
+					//ScoreDao.modify(vo) 호출
+					ScoreDao dao = new ScoreDao();
+					dao.modify(vo);
+					
+					
 				}
 			});
 			btnModify.setBounds(121, 147, 97, 32);
@@ -196,6 +210,11 @@ public class ScoreInput extends JInternalFrame {
 			btnDelete = new JButton("삭제");
 			btnDelete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					ScoreDao dao = new ScoreDao();
+					Integer serial = Integer.parseInt(((ScoreInput)main.si).getTfId().getText());
+										
+					dao.delete(serial);
+					
 				}
 			});
 			btnDelete.setBounds(230, 147, 97, 32);

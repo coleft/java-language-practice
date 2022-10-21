@@ -55,7 +55,7 @@ public class MemberDao {
 	public void modify(Data d) {
 		
 		// 기존 자료를 다시 read
-		list = read();
+		this.list = read();
 		// 수정할 데이터 검색
 		int index = list.indexOf(d);
 		if(index != -1) {

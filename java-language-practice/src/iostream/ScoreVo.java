@@ -8,7 +8,7 @@ public class ScoreVo implements Serializable{
 	
     int serial, score;
 	String id, mDate, subject;
-	
+	public ScoreVo(int s) {}
 	public ScoreVo(int s, String id, String md, String sub, int score) {
 		this.serial = s;
 		this.id = id;
@@ -38,8 +38,7 @@ public class ScoreVo implements Serializable{
 		boolean b = false;
 		if(obj instanceof ScoreVo) {
 			ScoreVo vo = (ScoreVo)obj;
-			b = (vo.getSerial() == this.getSerial());
-				
+			b = (vo.getSerial() == this.getSerial());			
 		}
 		return b;
 	}

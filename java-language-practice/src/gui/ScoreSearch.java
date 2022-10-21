@@ -21,6 +21,8 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ScoreSearch extends JInternalFrame {
 	private JPanel panel;
@@ -127,6 +129,29 @@ public class ScoreSearch extends JInternalFrame {
 			model.setDataVector(null, header);
 			
 			table = new JTable(model);
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int row = table.getSelectedRow();
+					if(main.si == null) {
+						main.si = new ScoreInput(main);
+						main.getDesktopPane().add(main.si);
+						main.getDesktopPane().updateUI();
+						main.si.toFront();
+					}
+					Integer serial = (Integer)table.getValueAt(row, 0);
+					String id = (String)table.getValueAt(row, 1);
+					String mDate = (String)table.getValueAt(row, 2);
+					String subject = (String)table.getValueAt(row, 3);
+					int score = (Integer)table.getValueAt(row, 4);
+					
+					main.si.getTfSerial().setText(serial.toString());
+					main.si.getTfId().setText(id);
+					main.si.getTfMdate().setText(mDate);
+					main.si.getTfSubject().setText(subject);
+					main.si.getTfScore().setText(score+"");
+				}
+			});
 		}
 		return table;
 	}
