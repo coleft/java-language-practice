@@ -169,7 +169,7 @@ public class MemberSearch extends JInternalFrame {
          			main.getDesktopPane().updateUI();
          			main.mi.toFront();
          		}
-         		Memberinput mi = (Memberinput)main.mi;	
+         		Memberinput mi = (Memberinput)main.mi;
          		String id = (String)table.getValueAt(row, 0);	/* null이 아니면 하나씩 떄려박아 */
          		String irum = (String)table.getValueAt(row, 1);
          		String addr = (String)table.getValueAt(row, 2);
