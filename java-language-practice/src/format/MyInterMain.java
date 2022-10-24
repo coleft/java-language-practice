@@ -8,9 +8,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import collection.ListFrame;
+import gui.MemberInputDB;
 import gui.MemberSearch;
+import gui.MemberSearchDB;
 import gui.ScoreInput;
 import gui.ScoreSearch;
+import gui.SelectBox;
 
 import java.awt.BorderLayout;
 import javax.swing.JDesktopPane;
@@ -23,10 +26,11 @@ import java.awt.event.ActionEvent;
 public class MyInterMain extends JFrame {
 
    // JInternalFrame을 하나씩만 생성하게 처리
-   public JInternalFrame mi, ms;
+   public JInternalFrame mi, ms, sb, midb, msdb;
    public ScoreInput si;
    public ScoreSearch ss;
-	
+
+   
    private JPanel contentPane;
    private JDesktopPane desktopPane;
    private JMenuBar menuBar;
@@ -41,6 +45,9 @@ public class MyInterMain extends JFrame {
    private JMenuItem mntmNewMenuItem_4;
    private JMenuItem mntmNewMenuItem_5;
    private JMenuItem mntmNewMenuItem_6;
+   private JMenuItem mntmNewMenuItem_7;
+   private JMenuItem mntmNewMenuItem_8;
+   private JMenuItem mntmNewMenuItem_9;
 
    /**
     * Launch the application.
@@ -96,6 +103,8 @@ public class MyInterMain extends JFrame {
          mnNewMenu = new JMenu("회원관리");
          mnNewMenu.add(getMntmNewMenuItem());
          mnNewMenu.add(getMntmNewMenuItem_1());
+         mnNewMenu.add(getMntmNewMenuItem_8());
+         mnNewMenu.add(getMntmNewMenuItem_9());
       }
       return mnNewMenu;
    }
@@ -152,6 +161,7 @@ public class MyInterMain extends JFrame {
 			mnNewMenu_3.add(getMntmNewMenuItem_2());
 			mnNewMenu_3.add(getMntmNewMenuItem_3());
 			mnNewMenu_3.add(getMntmNewMenuItem_4());
+			mnNewMenu_3.add(getMntmNewMenuItem_7());
 		}
 		return mnNewMenu_3;
 	}
@@ -206,7 +216,7 @@ public class MyInterMain extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					
 					if(si == null) {
-						si = new ScoreInput(MyInterMain.this);
+						si = new ScoreInput(MyInterMain.this);//<-null값이 필요하기 때문에 따로 생성자 하나 더 만들었다.
 						desktopPane.add(si);
 						desktopPane.updateUI();
 						si.toFront();
@@ -231,5 +241,53 @@ public class MyInterMain extends JFrame {
 			});
 		}
 		return mntmNewMenuItem_6;
+	}
+	public JMenuItem getMntmNewMenuItem_7() {
+		if (mntmNewMenuItem_7 == null) {
+			mntmNewMenuItem_7 = new JMenuItem("SQL");
+			mntmNewMenuItem_7.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					sb = new SelectBox(MyInterMain.this);
+					desktopPane.add(sb);
+					desktopPane.updateUI();
+					sb.toFront();
+					
+				}
+			});
+		}
+		return mntmNewMenuItem_7;
+	}
+	public JMenuItem getMntmNewMenuItem_8() {
+		if (mntmNewMenuItem_8 == null) {
+			mntmNewMenuItem_8 = new JMenuItem("회원가입DB");
+			mntmNewMenuItem_8.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(midb == null) {
+						midb = new MemberInputDB(MyInterMain.this);
+						desktopPane.add(midb);
+						desktopPane.updateUI();
+						midb.toFront();						
+					}
+				}
+			});
+		}
+		return mntmNewMenuItem_8;
+	}
+	public JMenuItem getMntmNewMenuItem_9() {
+		if (mntmNewMenuItem_9 == null) {
+			mntmNewMenuItem_9 = new JMenuItem("회원조회DB");
+			mntmNewMenuItem_9.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(msdb == null) {
+						msdb = new MemberSearchDB(MyInterMain.this);
+						desktopPane.add(msdb);
+						desktopPane.updateUI();
+						msdb.toFront();
+					}
+				}
+			});
+		}
+		return mntmNewMenuItem_9;
 	}
 }
