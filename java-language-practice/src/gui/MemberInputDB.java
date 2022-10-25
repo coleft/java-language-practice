@@ -70,14 +70,14 @@ public class MemberInputDB extends JInternalFrame {
 		super("회원가입DB", false,true,false,true);
 		setVisible(true);
 		
-		addInternalFrameListener(new InternalFrameAdapter() {
+		addInternalFrameListener(new InternalFrameAdapter() {	//internalFrame > Closing
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
 				main.midb = null;	
 			}
 		});
 		
-		setBounds(100, 100, 563, 249);
+		setBounds(100, 100, 454, 249);
 		getContentPane().setLayout(null);
 		getContentPane().add(getLblNewLabel());
 		getContentPane().add(getTfId());
@@ -99,6 +99,20 @@ public class MemberInputDB extends JInternalFrame {
 		bg.add(getBtnGenderF());
 		
 	}
+	
+	public void loadData(MemberVo vo) {
+		tfId.setText(vo.getId());
+		tfIrum.setText(vo.getIrum());
+		tfPhone.setText(vo.getPhone());
+		tfPicture.setText(vo.getPicture());
+		
+		if(vo.getGender().equals("m")) {
+			btnGenderM.setSelected(true);
+		}else {
+			btnGenderF.setSelected(true);
+		}
+	}
+	
 	public JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("아이디");
@@ -109,7 +123,7 @@ public class MemberInputDB extends JInternalFrame {
 	public JTextField getTfId() {
 		if (tfId == null) {
 			tfId = new JTextField();
-			tfId.setBounds(81, 7, 180, 21);
+			tfId.setBounds(81, 7, 132, 21);
 			tfId.setColumns(10);
 		}
 		return tfId;
@@ -125,7 +139,7 @@ public class MemberInputDB extends JInternalFrame {
 		if (tfIrum == null) {
 			tfIrum = new JTextField();
 			tfIrum.setColumns(10);
-			tfIrum.setBounds(81, 35, 208, 21);
+			tfIrum.setBounds(81, 35, 159, 21);
 		}
 		return tfIrum;
 	}
@@ -147,7 +161,7 @@ public class MemberInputDB extends JInternalFrame {
 		if (tfPhone == null) {
 			tfPhone = new JTextField();
 			tfPhone.setColumns(10);
-			tfPhone.setBounds(81, 91, 266, 21);
+			tfPhone.setBounds(81, 91, 195, 21);
 		}
 		return tfPhone;
 	}
@@ -162,7 +176,7 @@ public class MemberInputDB extends JInternalFrame {
 		if (tfPicture == null) {
 			tfPicture = new JTextField();
 			tfPicture.setColumns(10);
-			tfPicture.setBounds(81, 122, 353, 21);
+			tfPicture.setBounds(81, 122, 239, 21);
 		}
 		return tfPicture;
 	}
@@ -199,6 +213,20 @@ public class MemberInputDB extends JInternalFrame {
 			btnModify = new JButton("수정");
 			btnModify.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					String id = tfId.getText();
+					String irum = tfIrum.getText();
+					String gender = btnGenderM.isSelected() ? "m" : "f";
+					String phone = tfPhone.getText();					
+					String picture = tfPicture.getText();
+					
+					MemberVo vo = new MemberVo(id,irum,gender,phone,picture);
+					MemberDto dto = new MemberDto();
+					int cnt = dto.update(vo);	//control키 누르고 update 누르면 해당 위치로 바로 이동 가능합니다.
+					if(cnt>0) {
+						//성공
+					}else {
+						//오류
+					}
 				}
 			});
 			btnModify.setBounds(199, 153, 106, 36);
@@ -210,6 +238,17 @@ public class MemberInputDB extends JInternalFrame {
 			btnDelete = new JButton("삭제");
 			btnDelete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					String id = tfId.getText();
+					MemberDto dto = new MemberDto();
+					int cnt = dto.delete(id);
+					if(cnt>0) {
+						tfId.setText("");
+						tfIrum.setText("");
+						tfPhone.setText("");
+						tfPicture.setText("");						
+					}else {
+						// 오류 처리
+					}					
 				}
 			});
 			btnDelete.setBounds(317, 153, 106, 36);
@@ -243,7 +282,7 @@ public class MemberInputDB extends JInternalFrame {
 					}
 				}
 			});
-			btnNewButton_3.setBounds(438, 121, 97, 21);
+			btnNewButton_3.setBounds(326, 122, 97, 21);
 		}
 		return btnNewButton_3;
 	}

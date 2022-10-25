@@ -55,11 +55,54 @@ public class MemberDto {	//데이터 처리 DAO, 통신 기능이 포함되면 D
 	
 	public int update(MemberVo vo) {
 		int cnt = 0;
+		
+		try {
+			conn = new DBConn("mydb").getConn();
+			conn.setAutoCommit(false);
+			//id, name, gender, phone, picture만 바꾸고 mdate는 안바꾸는 걸로 할게.
+			String sql = "update member set name = ?, gender = ?, phone = ?, picture = ?"	//띄어쓰기 최소화 해야하나?
+						+" where id = ? ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			//다섯개의 물음표에 값을 세팅하고 있습니다.
+			ps.setString(1, vo.getIrum());
+			ps.setString(2, vo.getGender());
+			ps.setString(3, vo.getPhone());
+			ps.setString(4, vo.getPicture());
+			ps.setString(5, vo.getId());			
+			
+			cnt = ps.executeUpdate(); //일종의 cursor 역할을 합니다.
+			if(cnt>0) conn.commit();
+			else	  conn.rollback();
+			
+			ps.close();
+			conn.close();
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
 		return cnt;
 	}
 	
 	public int delete(String id) {
 		int cnt = 0;
+		try {
+			conn = new DBConn("mydb").getConn();
+			conn.setAutoCommit(false);
+			
+			String sql = "delete from member where id = ? ";			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			cnt = ps.executeUpdate();
+			if(cnt>0) conn.commit();
+			else	  conn.rollback();
+			
+			ps.close();
+			conn.close();
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
 		return cnt;
 	}	
 	
@@ -76,7 +119,7 @@ public class MemberDto {	//데이터 처리 DAO, 통신 기능이 포함되면 D
 			ps.setString(2, "%"+findStr+"%");
 			ps.setString(3, "%"+findStr+"%");
 			
-			ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();	//Object타입으로 반환
 			while(rs.next()) {
 				Vector v = new Vector();
 				v.add(rs.getString("id"));
@@ -91,6 +134,32 @@ public class MemberDto {	//데이터 처리 DAO, 통신 기능이 포함되면 D
 			ex.printStackTrace();
 		}		
 		return list;
+	}
+
+	public MemberVo selectOne(String id) {
+
+		MemberVo vo = new MemberVo();
+		try {
+			String sql = "select * from member where id = ? ";
+			conn = new DBConn("mydb").getConn();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				vo.setId(rs.getString("id"));
+				vo.setIrum(rs.getString("name"));
+				vo.setGender(rs.getString("gender"));
+				vo.setPhone(rs.getString("phone"));
+				vo.setPicture(rs.getString("picture"));
+				vo.setmDate(rs.getString("mdate"));
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		
+		return vo;
 	}
 	
 }

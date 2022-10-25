@@ -6,6 +6,8 @@ public class MemberVo {
 	 * Vo는 한 사람의 데이터를 저장하는 공간이라고 생각하자.
 	 * 한 사람이 여러장의 사진 등을 가지면 Vector나 ArrayList 등을 만들어라.
 	 * 
+	 * 데이터 포멧 같은 거다. 이거 통해서 데이터를 체계적으로 만든다.
+	 * 
 	 * */
 	
 	String id, irum, gender, phone, picture, mDate;
