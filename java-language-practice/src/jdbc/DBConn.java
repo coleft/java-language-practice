@@ -9,7 +9,7 @@ public class DBConn {
 	
 	String driver = "com.mysql.cj.jdbc.Driver";	//드라이버명 상수
 	
-	String db = "mydb";
+	String db = "classicmodels";
 	String path = "jdbc:mysql://localhost:3306/";	//해당 데이터베이스 서버 오라클은 8080
 	String unicode = "?useUnicode=true&characterEncoding=utf8";	//3306으로 정해져있다.
 	

@@ -275,8 +275,9 @@ public class MyInterMain extends JFrame {
 						midb = new MemberInputDB(MyInterMain.this);
 						desktopPane.add(midb);
 						desktopPane.updateUI();
-						midb.toFront();						
+						midb.toFront();
 					}
+					//midb.toFront();
 				}
 			});
 		}
@@ -287,12 +288,12 @@ public class MyInterMain extends JFrame {
 			mntmNewMenuItem_9 = new JMenuItem("회원조회DB");
 			mntmNewMenuItem_9.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(msdb == null) {
-						msdb = new MemberSearchDB(MyInterMain.this);
+					
+						msdb = new MemberSearchDB(/*MyInterMain.this*/);
 						desktopPane.add(msdb);
 						desktopPane.updateUI();
 						msdb.toFront();
-					}
+					
 				}
 			});
 		}

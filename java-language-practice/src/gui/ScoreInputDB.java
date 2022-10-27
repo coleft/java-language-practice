@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class ScoreInputDB extends JInternalFrame {
@@ -141,6 +143,9 @@ public class ScoreInputDB extends JInternalFrame {
 			tfMdate = new JTextField();
 			tfMdate.setColumns(10);
 			tfMdate.setBounds(97, 84, 325, 27);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			tfMdate.setText(sdf.format(new Date()));
 		}
 		return tfMdate;
 	}
@@ -179,21 +184,26 @@ public class ScoreInputDB extends JInternalFrame {
 			btnSave = new JButton("저장");
 			btnSave.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String serial = tfSerial.getText();
+					
+					//1. 전처리
+					//String serial = tfSerial.getText();
 					String id = tfId.getText();
 					String mdate = tfMdate.getText();
 					String subject = tfSubject.getText();
 					String score = tfScore.getText();
 					
-					ScoreVo vo = new ScoreVo(serial, id, mdate, subject, score);
+					//2. 메인처리
+					ScoreVo vo = new ScoreVo("0" , id, mdate, subject, score);
 					ScoreDto dto = new ScoreDto();
 					int cnt = dto.insert(vo);
 					
+					//3. 후처리
 					if(cnt>0) {
-						System.out.println("정상처리됨");
+						System.out.println("정상처리됨");	//label 만들고 나서 main.getStatus().setText("저장 오케이~");
 					}else {
 						System.out.println("저장 중 오류 발생");
 					}
+					
 				}
 			});
 			btnSave.setBounds(12, 195, 113, 65);
@@ -205,20 +215,26 @@ public class ScoreInputDB extends JInternalFrame {
 			btnModify = new JButton("수정");
 			btnModify.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
+					//1. 전처리
 					String serial = tfSerial.getText();
 					String id = tfId.getText();
 					String mdate = tfMdate.getText();
 					String subject = tfSubject.getText();
 					String score = tfScore.getText();
 					
-					ScoreVo vo = new ScoreVo(serial, id, mdate, subject, score);
+					//2. 메인 로직
+					ScoreVo vo = new ScoreVo(serial, id, mdate, subject, score);	//입력받을 때는 4개 받는 생성자를 중복선언 하는 것이 좋습니다. 근데 그냥 생성자 하나 돌려쓰는 중
 					ScoreDto dto = new ScoreDto();
 					int cnt = dto.update(vo);
+					
+					//3. 후처리
 					if(cnt>0) {
-						//성공
+						System.out.println("수정 완료됨");
 					}else {
-						//오류
+						System.out.println("수정 중 오류 발생");
 					}
+					
 				}
 			});
 			btnModify.setBounds(162, 195, 113, 65);
@@ -230,18 +246,21 @@ public class ScoreInputDB extends JInternalFrame {
 			btnDelete = new JButton("삭제");
 			btnDelete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String serial = tfSerial.getText();
+					String serial = tfSerial.getText();	//int serial = Integer.parseInt(getTfSerial().getText());
 					ScoreDto dto = new ScoreDto();
 					int cnt = dto.delete(serial);
+					
 					if(cnt>0) {
 						tfSerial.setText("");
 						tfId.setText("");
 						tfMdate.setText("");
 						tfSubject.setText("");
 						tfScore.setText("");
+						//main.getStatus().setText("삭제됨...");
 					}else {
-						//오류처리
+						//main.getStatus().setText("삭제 중 오류 발생...");
 					}
+					
 				}
 			});
 			btnDelete.setBounds(309, 195, 113, 65);

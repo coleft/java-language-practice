@@ -67,12 +67,6 @@ public class MemberSearchDB extends JInternalFrame {
 		super("회원조회DB", true, true, true, true);
 		setVisible(true);
 		
-		addInternalFrameListener(new InternalFrameAdapter() {
-			@Override
-			public void internalFrameClosing(InternalFrameEvent e) {
-				main.msdb = null;
-			}
-		});
 		
 		setBounds(100, 100, 702, 459);
 		getContentPane().add(getPanel(), BorderLayout.NORTH);
@@ -148,6 +142,7 @@ public class MemberSearchDB extends JInternalFrame {
 	public JTable getTable() {
 		if (table == null) {
 			table = new JTable();
+			
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -164,6 +159,7 @@ public class MemberSearchDB extends JInternalFrame {
 					main.midb.toFront();
 				}
 			});
+			
 			String[] header = {"아이디","성명","성별","연락처","등록일"};
 			DefaultTableModel model = new DefaultTableModel(null, header); //데이터는 없고 헤더만 있음
 			table.setModel(model);

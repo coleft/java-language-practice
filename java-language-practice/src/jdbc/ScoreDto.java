@@ -17,15 +17,15 @@ public class ScoreDto {
 		try {
 			conn.setAutoCommit(false);
 			
-			String sql = "insert into score(serial, id, mdate, subject, score)"+
-						" values(?,?,?,?,?)";
+			String sql = "insert into score(id, mdate, subject, score)"+
+						" values(?,?,?,?)";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, vo.getSerial());
-			ps.setString(2, vo.getId());
-			ps.setString(3, vo.getMdate());
-			ps.setString(4, vo.getSubject());
-			ps.setString(5, vo.getScore());
+			//ps.setString(1, vo.getSerial());
+			ps.setString(1, vo.getId());
+			ps.setString(2, vo.getMdate());
+			ps.setString(3, vo.getSubject());
+			ps.setString(4, vo.getScore());
 			
 			cnt = ps.executeUpdate();
 			if(cnt>0) conn.commit();
@@ -94,12 +94,15 @@ public class ScoreDto {
 	
 	public Vector<Vector> select(String findStr){
 		Vector<Vector> list = new Vector<Vector>();
+		/*
 		try {
 			conn = new DBConn("mydb").getConn();
+			
 			String sql = "select * from score "+
 						 "where serial like ? "+
 						 "or id like ? "+
 						 "or subject like ? ";
+			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, "%"+findStr+"%");
 			ps.setString(2, "%"+findStr+"%");
@@ -114,19 +117,51 @@ public class ScoreDto {
 				v.add(rs.getString("subject"));
 				v.add(rs.getString("score"));
 				list.add(v);
+			
 			}
 			
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
+		*/
+		//Bot ~~~~~ Eot
+		
+		try {
+	         conn = new DBConn("mydb").getConn();
+	         String sql = " select serial, id, subject, score, "
+	                  + " date_format(mDate, '%Y-%m-%d') mDate from score "
+	                  + " where id like ? "
+	                  + " or subject like ? ";
+	         PreparedStatement ps = conn.prepareStatement(sql);
+	         ps.setString(1, "%"+findStr+"%");
+	         ps.setString(2, "%"+findStr+"%");
+	         
+	         ResultSet rs = ps.executeQuery();
+	         while(rs.next()) {
+	            Vector v = new Vector();
+	            v.add(rs.getString("serial"));
+	            v.add(rs.getString("id"));
+	            v.add(rs.getString("mDate"));
+	            v.add(rs.getString("subject"));
+	            v.add(rs.getString("score"));
+	            list.add(v);
+	         }
+	         ps.close();
+	         conn.close();
+	      }catch(Exception ex) {
+	         ex.printStackTrace();
+	      }
 		
 		return list;
 	}
 	
+	
+	
 	public ScoreVo selectOne(String serial) {
 		ScoreVo vo = new ScoreVo();
 		try {
-			String sql = "select * from score where serial = ? ";
+			String sql = "select serial, id, subject, score, "
+					+ " date_format(mdate, '%Y-%m-%d') mdate from score where serial = ? ";
 			conn = new DBConn("mydb").getConn();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, serial);

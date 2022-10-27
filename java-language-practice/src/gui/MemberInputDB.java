@@ -58,14 +58,14 @@ public class MemberInputDB extends JInternalFrame {
 	}
 
 	public MemberInputDB(MyInterMain main) {
-		this();
-		this.main = main;
+		this();	//순서 지켜라. 자기자신의 또 다른 생성자를 부르려면 꼭 첫번째 문장에서 불러줘야 한다. 자기 꺼 생성자
+		this.main = main;	//매개변수로 받은 놈을 자신의 필드에 꼽아 넣는다. 여기서 매개변수는 매개변수가 없는 생성자 내의 internalFrameClosing 부분의 main 때문에 써준것이다.
 	}
 	
 	/**
 	 * Create the frame.
 	 */
-	public MemberInputDB() {
+	public MemberInputDB() {	//원래 매개변수가 없는 생성자
 		
 		super("회원가입DB", false,true,false,true);
 		setVisible(true);
@@ -73,7 +73,7 @@ public class MemberInputDB extends JInternalFrame {
 		addInternalFrameListener(new InternalFrameAdapter() {	//internalFrame > Closing
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				main.midb = null;	
+				main.midb = null;	//main부분에서 다시 생성되지 않는다. 자기 자신이 메인에서 닫히면 null로 만들어 준다. 이거 때문에 위에 this.main 있는 것 같다.
 			}
 		});
 		
